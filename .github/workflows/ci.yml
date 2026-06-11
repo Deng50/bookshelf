@@ -1,0 +1,41 @@
+# GitHub Actions CI 配置
+# 文档：https://docs.github.com/en/actions
+#
+# 触发条件：每次 push 或开 PR 时自动运行
+# 作用：自动安装依赖、跑测试，PR 页面会显示"绿勾"或"红叉"
+# 学习价值：体验"自动化测试"在多人协作中的作用——
+#          PR 没过 CI 通常不允许合并，能挡住很多低级 bug
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    # 在 GitHub 提供的 Ubuntu 虚拟机里跑
+    runs-on: ubuntu-latest
+
+    steps:
+      # 第一步：把仓库代码 checkout 到虚拟机
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      # 第二步：装 Python
+      - name: 安装 Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # 第三步：装本项目和开发依赖（pytest）
+      - name: 安装项目依赖
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      # 第四步：跑测试
+      - name: 运行 pytest
+        run: pytest -v
