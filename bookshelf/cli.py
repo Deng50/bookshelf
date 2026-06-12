@@ -24,6 +24,9 @@ def build_parser() -> argparse.ArgumentParser:
     # 例如：
     from bookshelf.commands import add
     add.register(subparsers)
+
+    from bookshelf.commands import list_books
+    list_books.register(subparsers)
     # === REGISTER:END ===
 
     return parser
