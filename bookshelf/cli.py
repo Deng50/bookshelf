@@ -22,8 +22,8 @@ def build_parser() -> argparse.ArgumentParser:
     # === REGISTER:BEGIN ===
     # 贡献者：在这里 import 你的命令模块并调用 register(subparsers)
     # 例如：
-    #     from bookshelf.commands import add
-    #     add.register(subparsers)
+    from bookshelf.commands import add
+    add.register(subparsers)
     # === REGISTER:END ===
 
     return parser
