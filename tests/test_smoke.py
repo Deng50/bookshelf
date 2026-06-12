@@ -27,3 +27,28 @@ def test_storage_round_trip(tmp_path, monkeypatch):
     storage.save_books(sample)
     loaded = storage.load_books()
     assert loaded == sample
+
+def test_search_does_not_modify_storage(tmp_path, monkeypatch):
+    """回归测试：search 命令绝不能修改存储。
+
+    动机：v0.1.x 出过严重 bug——search 会把搜索结果当成全部书保存回去。
+    这个测试就是为了**防止同类错误再次发生**。
+    """
+    from bookshelf.commands import search
+    import argparse
+
+    fake_file = tmp_path / "fake.json"
+    monkeypatch.setattr(storage, "STORAGE_FILE", fake_file)
+
+    original = [
+        {"id": 1, "title": "三体", "author": "刘慈欣", "tags": []},
+        {"id": 2, "title": "活着", "author": "余华", "tags": []},
+    ]
+    storage.save_books(original)
+
+    # 模拟用户搜"三体"
+    args = argparse.Namespace(keyword="三体", ignore_case=False)
+    search.run(args)
+
+    # 关键断言：存储里**还是两本书**
+    assert storage.load_books() == original
