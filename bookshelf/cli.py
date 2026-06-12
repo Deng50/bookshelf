@@ -27,6 +27,11 @@ def build_parser() -> argparse.ArgumentParser:
 
     from bookshelf.commands import list_books
     list_books.register(subparsers)
+
+    from bookshelf.commands import search
+    search.register(subparsers)
+
+
     # === REGISTER:END ===
 
     return parser
