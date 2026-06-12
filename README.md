@@ -20,7 +20,7 @@ bookshelf --help
 ## 可用命令
 
 <!-- COMMANDS:BEGIN -->
-_暂无命令。每位贡献者在此处添加自己实现的命令。_
+- `bookshelf add <书名> [--author 作者] [--tag 标签]` —— 添加一本书（小张）
 <!-- COMMANDS:END -->
 
 ## 贡献流程

@@ -6,16 +6,22 @@ def register(subparsers):
     """注册 'add' 子命令到主解析器。"""
     p = subparsers.add_parser("add", help="添加一本书")
     p.add_argument("title", help="书名")
-    # TODO: 还没实现 author 和 tag，先推个半成品
+    p.add_argument("--author", default="", help="作者，可留空")
+    # action="append" 让用户多次传 --tag 累积成列表：--tag 科幻 --tag 经典
+    p.add_argument("--tag", action="append", default=[], help="标签，可多次指定")
     p.set_defaults(handler=run)
 
 
 def run(args):
     """执行 add 命令。"""
     books = storage.load_books()
-    # 简单地用"现有数量 + 1"作为 ID（生产环境会用 UUID）
-    new_book = {"id": len(books) + 1, "title": args.title}
+    new_book = {
+        "id": len(books) + 1,
+        "title": args.title,
+        "author": args.author,
+        "tags": args.tag,
+    }
     books.append(new_book)
     storage.save_books(books)
-    print(f"已添加：{new_book['title']}")
+    print(f"已添加：{new_book['title']}（ID: {new_book['id']}）")
     return 0
