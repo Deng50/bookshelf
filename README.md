@@ -21,6 +21,7 @@ bookshelf --help
 
 <!-- COMMANDS:BEGIN -->
 - `bookshelf add <书名> [--author 作者] [--tag 标签]` —— 添加一本书（小张）
+- `bookshelf list` —— 列出所有书（小李）
 <!-- COMMANDS:END -->
 
 ## 贡献流程
