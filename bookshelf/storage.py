@@ -24,7 +24,13 @@ def load_books() -> list[dict]:
     if not STORAGE_FILE.exists():
         return []
     # 用 utf-8 防止中文乱码；这是国内项目特别要注意的点
-    return json.loads(STORAGE_FILE.read_text(encoding="utf-8"))
+    # 修复：用 UTF-8-SIG 兼容带 BOM 的文件
+    # （Windows 记事本默认会在文件开头加 BOM，导致 utf-8 读取报错）
+    try:
+        text = STORAGE_FILE.read_text(encoding="utf-8")
+    except UnicodeDecodeError:
+        text = STORAGE_FILE.read_text(encoding="utf-8-sig")
+    return json.loads(text)
 
 
 def save_books(books: list[dict]) -> None:
