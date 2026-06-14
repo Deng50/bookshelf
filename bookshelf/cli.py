@@ -30,7 +30,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     from bookshelf.commands import search
     search.register(subparsers)
-
+    
+    from bookshelf.commands import export
+    export.register(subparsers)
 
     # === REGISTER:END ===
 

@@ -23,6 +23,7 @@ bookshelf --help
 - `bookshelf add <书名> [--author 作者] [--tag 标签]` —— 添加一本书（小张）
 - `bookshelf list` —— 列出所有书（小李）
 - `bookshelf search <关键词> [-i]` —— 按关键词搜索（小王，已修复）
+- `bookshelf export 导出（小陈）
 <!-- COMMANDS:END -->
 
 ## 贡献流程
